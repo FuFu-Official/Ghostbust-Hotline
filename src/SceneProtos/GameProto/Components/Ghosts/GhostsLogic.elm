@@ -236,15 +236,18 @@ handleCPosNormal env msg data basedata =
                     else
                         0
 
+                didAttack =
+                    isCollided && modBy GhostsInit.ghostsConfig.normal.attackFrames updatedCnt == 3
+
                 newMsg =
-                    if isCollided && modBy GhostsInit.ghostsConfig.normal.attackFrames updatedCnt == 3 then
+                    if didAttack then
                         [ Other <| ( "Character", GhostsMsg <| GhostsInit.AttackCharacterMsg GhostsInit.ghostsConfig.normal.normalAttackDamage ) ]
 
                     else
                         []
 
                 newLastHitCharacterTime =
-                    if isCollided then
+                    if didAttack then
                         currentTime
 
                     else
